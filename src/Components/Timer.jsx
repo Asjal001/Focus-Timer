@@ -1,17 +1,18 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect,useRef} from 'react'
 
 function Timer (props) 
 {
   const [timeLeft,setTimeLeft]=useState(props.time);
   const [isRunning,setIsRunning]=useState(false);
-  useEffect(() => {
-    setIsRunning(false);
-  }, [props.modes]);
+  const timerRef = useRef(null);
   useEffect(() => {
     setTimeLeft(props.time);
-  }, [props.time]);
+  }, [props.time,props.activeTask]);
   useEffect(() => {
-    if (props.autoStart && props.modes === "focus") 
+      timerRef.current?.focus();
+    }, [isRunning]);
+  useEffect(() => {
+    if (props.autoStart && props.modes === "focus" && props.activeTask) 
     {
       setIsRunning(true);
     }
@@ -38,11 +39,12 @@ function Timer (props)
           props.onSessionEnd?.();
           return 0;
         }
-        
+
         return prevTime-1;
       });
     },1000);
   }
+  
   return () => clearInterval(interval); 
   }, [isRunning]);
   return (
@@ -52,11 +54,12 @@ function Timer (props)
       className={`mode-button ${props.modes === "focus" ? "active-mode" : "non-active-mode"}`}
       >Focus</button>
       <button
+      ref={timerRef}
       onClick={() => props.onModeChange("break")}
       className={`mode-button ${props.modes === "break" ? "active-mode" : "non-active-mode"}`}
       >Break</button>
       <br></br>
-      <h1>{formatTime(timeLeft)}</h1>
+      <h1 className='time'>{formatTime(timeLeft)}</h1>
       <button onClick={() => setIsRunning(prev=>!prev)}
         className={`mode-button ${!isRunning ? "start-button" : "pause-button"}`} 
       >{isRunning?"Pause":"Start"}</button>

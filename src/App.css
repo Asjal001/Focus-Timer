@@ -214,3 +214,7 @@ body{
 .pause-button:hover{
   background-color: #173d72;
 }
+
+.time{
+  font-size: 50px;
+}

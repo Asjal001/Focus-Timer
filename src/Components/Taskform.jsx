@@ -1,13 +1,16 @@
-import React,{useState} from 'react'
+import React,{useState,useRef,useEffect} from 'react'
 
 function Taskform(props) 
 {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState("");
+  const nameInputRef = useRef(null);
+  useEffect(() => {
+    nameInputRef.current?.focus();
+  }, []);
   const handleSubmit = (e) =>{
     e.preventDefault();
-  
     const newTask = {
       id: Date.now(),
       name: name.trim(),
@@ -26,6 +29,7 @@ function Taskform(props)
     <div className="taskform-container">
       <form onSubmit={handleSubmit}>
         <input 
+          ref={nameInputRef}
           value={name} 
           type='text' 
           placeholder='Task Name'

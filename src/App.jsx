@@ -5,7 +5,7 @@ import Taskform from './Components/Taskform';
 import Tasklist from './Components/Tasklist';
 function App() {
   const [mode, setMode] = useState("focus");
-  const [duration, setDuration] = useState(10);
+  const [duration, setDuration] = useState(1800);
   const [isFormVisible, setIsFormVisible]=useState(false);
   const [activeTask, setActiveTask] = useState(null);
   const [autoStart, setAutoStart]=useState(false);
@@ -40,18 +40,18 @@ function App() {
     if(mode==="focus")
     {
       setMode("break");
-      setDuration(20);
+      setDuration(300);
     }
     else
     {
       setMode("focus");
-      setDuration(10);
+      setDuration(1800);
       setAutoStart(false); 
     }
   };
   const handleModeChange = (newMode)=>{
     setMode(newMode);
-    setDuration(newMode==="focus"?10:20);
+    setDuration(newMode==="focus"?1800:300);
   }
   function handleAddTask(task)
   {
@@ -81,7 +81,7 @@ function App() {
   {
     setActiveTask(id);
     setMode("focus");
-    setDuration(10);
+    setDuration(1800);
     setAutoStart(true);
   }
 
