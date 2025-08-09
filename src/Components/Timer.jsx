@@ -38,6 +38,7 @@ function Timer (props)
           props.onSessionEnd?.();
           return 0;
         }
+        
         return prevTime-1;
       });
     },1000);
